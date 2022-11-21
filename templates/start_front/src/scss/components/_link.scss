@@ -1,0 +1,11 @@
+.link {
+  text-decoration: none;
+
+  &--default {
+    color: white;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,122 @@
+/*
+**  responsive
+ */
+
+ //@mixin mobile {
+ //  @media (max-width: #{$width-mobile}) {
+ //    @content;
+ //  }
+ //}
+ //@mixin tablet {
+ //  @media (min-width: #{$width-mobile + 1px}) and (max-width: #{$width-tablet}) {
+ //    @content;
+ //  }
+ //}
+ //
+ //@mixin responsive {
+ //  @include tablet {
+ //    @content;
+ //  }
+ //
+ //  @include mobile {
+ //    @content;
+ //  }
+ //
+ //}
+ // new
+ @mixin large {
+   @media (min-width: #{$screen-large}) {
+     @content;
+   }
+ }
+ @mixin mobile-small {
+   @media (max-width: #{$mobile-small}) {
+     @content;
+   }
+ }
+ @mixin mobile-large {
+   @media (min-width: #{$mobile-small + 1px}) and (max-width: #{$mobile-large}) {
+     @content;
+   }
+ }
+
+ @mixin tablet-small {
+   @media (min-width: #{$mobile-large + 1px}) and (max-width: #{$tablet-small}) {
+     @content;
+   }
+ }
+ @mixin tablet-large {
+   @media (min-width: #{$tablet-small + 1px}) and (max-width: #{$tablet-large}) {
+     @content;
+   }
+ }
+
+ @mixin screen-small {
+   @media (min-width: #{$tablet-large + 1px}) and (max-width: #{$screen-small}) {
+     @content;
+   }
+ }
+ @mixin screen-large {
+   @media (min-width: #{$screen-small + 1px}) and (max-width: #{$screen-large}) {
+     @content;
+   }
+ }
+
+ @mixin mobile {
+   @include mobile-small {
+     @content;
+   }
+   @include mobile-large {
+     @content;
+   }
+ }
+ @mixin tablet {
+   @include tablet-small {
+     @content;
+   }
+   @include tablet-large {
+     @content;
+   }
+ }
+ @mixin screen {
+   @include screen-small {
+     @content;
+   }
+   @include screen-large {
+     @content;
+   }
+ }
+
+ // переделать. Нужен ли он вообще?
+ @mixin responsive {
+   @include screen {
+     @content;
+   }
+   @include tablet {
+     @content;
+   }
+   @include mobile {
+     @content;
+   }
+ }
+
+ // переделать
+ @mixin tablet--lte {
+   @include tablet {
+     @content;
+   }
+   @include mobile {
+     @content;
+   }
+ }
+ @mixin screen-small--lte {
+   @include screen-small {
+     @content;
+   }
+   @include tablet {
+     @content;
+   }
+   @include mobile {
+     @content;
+   }
+ }

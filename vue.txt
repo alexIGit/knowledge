@@ -1,0 +1,344 @@
+
+== Хуки жизненного цикла: 
+
+created 	- можно использовать для запуска кода после создания экземпляра
+mounted
+updated
+unmounted
+
+
+
+== Синтаксис шаблонов
+{{ msg }}
+<span v-once>
+<span v-html="rawHtml"></span>
+ 
+<div v-bind:id="dynamicId"></div>
+<button v-bind:disabled="isButtonDisabled">Кнопка</button>
+
+
+-- js выражения
+{{ number + 1 }}
+{{ ok ? 'YES' : 'NO' }}
+{{ message.split('').reverse().join('') }}
+<div v-bind:id="'list-' + id"></div>
+
+
+-- Директивы
+<p v-if="seen">Сейчас меня видно</p>
+
+
+-- Аргументы
+<a v-bind:href="url"> ... </a>
+<a v-on:click="doSomething"> ... </a>
+<a v-bind:[attributeName]="url"> ... </a>
+<a v-on:[eventName]="doSomething"> ... </a>
+
+
+-- Модификаторы
+<form v-on:submit.prevent="onSubmit">...</form>
+
+
+--Сокращение v-bind
+<a v-bind:href="url"> ... </a>	<!-- полный синтаксис -->
+<a :href="url"> ... </a>	<!-- сокращённая запись -->
+<a :[key]="url"> ... </a>	<!-- сокращённая запись с динамическим именем аргумента -->
+
+
+-- Сокращение v-on
+<a v-on:click="doSomething"> ... </a> 	<!-- полный синтаксис -->
+<a @click="doSomething"> ... </a>	<!-- сокращённая запись -->
+<a @[event]="doSomething"> ... </a>	<!-- сокращённая запись с динамическим именем события -->
+
+
+== Методы
+  methods: {
+    increment() {
+      // `this` указывает на экземпляр компонента
+      this.count++
+    }
+  },
+  ...
+vm.increment()
+<button @click="increment">Увеличить счётчик</button>
+  
+  
+== Хуки жизненного цикла
+beforeCreate() {}
+created() {}
+beforeMount() {}
+mounted() {}
+beforeUpdate() {}
+updated() {}
+beforeUnmount() {}
+unmounted() {}
+
+
+==  Вычисляемые свойства  (кэшируются на основе своих реактивных зависимостей)
+computed: {
+    publishedBooksMessage() {}
+  }
+<span>{{ publishedBooksMessage }}</span>
+
+
+== Методы-наблюдатели
+ <input v-model="question" />
+ <p>{{ answer }}</p>
+ 
+watch: {
+      // при каждом изменении `question` эта функция будет запускаться
+      question(newQuestion, oldQuestion) {}
+}
+   
+   
+== Стили
+<div
+  class="static"
+  :class="{ active: isActive, 'text-danger': hasError }"
+></div>
+
+data() {
+  return {
+    isActive: true,
+    hasError: false
+  }
+}
+
+
+== Условная отрисовка
+1.
+<h1 v-if="awesome">Vue восхитителен!</h1>
+<h1 v-else>О, нет 😢</h1>
+
+2.
+<template v-if="ok">
+  <h1>Заголовок</h1>
+</template>
+
+3.
+<div v-if="type === 'A'">	A</div>
+<div v-else-if="type === 'B'"> 	B</div>
+<div v-else> 			Точно не A, B </div>
+
+4. 
+<h1 v-show="ok">Привет!</h1>
+Отличия в том, что элемент с v-show будет всегда отрисовываться и оставаться в DOM, а переключаться будет лишь его CSS свойство display.
+
+
+== Отрисовка списков
+1.
+<li v-for="item in items">
+    {{ item.message }}
+</li>
+
+2.
+ <li v-for="(item, index) in items">
+    {{ index }} - {{ item.message }}
+  </li>
+  
+3.
+<div v-for="item of items">...</div>
+
+4.
+<div v-for="item in items" :key="item.id">
+  <!-- содержимое -->
+</div>
+
+5.
+<template v-for="item in items" :key="item.msg">
+    <li>{{ item.msg }}</li>
+    <li class="divider" role="presentation"></li>
+  </template>
+  
+-- Отслеживание изменений в массивах
+push()
+pop()
+shift()
+unshift()
+splice()
+sort()
+reverse()
+
+== Прослушивание событий
+<button v-on:click="counter += 1">Добавить 1</button>
+<button @click="counter += 1">Добавить 1</button>
+
+<button @click="greet">Поприветствовать</button>
+methods: {
+    greet(event) {}
+}
+
+<button @click="one($event), two($event)"></>
+
+--
+.stop
+.prevent
+.capture
+.self
+.once
+.passive
+
+
+<!-- всплытие события click будет остановлено -->
+<a @click.stop="doThis"></a>
+
+<!-- событие submit перестанет перезагружать страницу -->
+<form @submit.prevent="onSubmit"></form>
+
+<!-- модификаторы можно объединять в цепочки -->
+<a @click.stop.prevent="doThat"></a>
+
+<!-- можно использовать без обработчиков -->
+<form @submit.prevent></form>
+
+<!-- можно отслеживать события в режиме capture, т.е. событие, нацеленное -->
+<!-- на внутренний элемент, обрабатывается здесь до обработки этим элементом -->
+<div @click.capture="doThis">...</div>
+
+<!-- вызов обработчика только в случае наступления события непосредственно -->
+<!-- на данном элементе (то есть не на дочернем компоненте) -->
+<div @click.self="doThat">...</div>
+
+<!-- вызвать `vm.submit()` только если `key` будет `Enter` -->
+<input @keyup.enter="submit" />
+
+<input @keyup.page-down="onPageDown" />
+
+-- Псевдонимы клавиш Vue предоставляет псевдонимы для наиболее часто используемых клавиш:
+.enter
+.tab
+.delete (ловит как «Delete», так и «Backspace»)
+.esc
+.space
+.up
+.down
+.left
+.right
+
+--
+
+
+== Работа с формами
+-- Текст
+<input v-model="message" placeholder="отредактируй меня" />
+<p>Сообщение: {{ message }}</p>
+
+-- Чекбоксы
+<input type="checkbox" id="checkbox" v-model="checked" />
+<label for="checkbox">{{ checked }}</label>
+
+-- Список чекбоксов, привязанных к одному массиву:
+<div>
+  <input type="checkbox" id="jack" value="Джек" v-model="checkedNames" />
+  <label for="jack">Джек</label>
+  <input type="checkbox" id="john" value="Джон" v-model="checkedNames" />
+  <label for="john">Джон</label>
+   
+  <span>Отмеченные имена: {{ checkedNames }}</span>
+</div>
+
+  data() {
+    return {
+      checkedNames: []
+    }
+  }
+
+-- Радиокнопки
+<div>
+  <input type="radio" id="one" value="Один" v-model="picked" />
+  <label for="one">Один</label>
+
+  <input type="radio" id="two" value="Два" v-model="picked" />
+  <label for="two">Два</label>
+
+  <span>Выбрано: {{ picked }}</span>
+</div>
+
+  data() {
+    return {
+      picked: ''
+    }
+
+-- Выпадающие списки
+Выбор одного варианта из списка:
+
+<div>
+  <select v-model="selected">
+    <option disabled value="">Выберите один из вариантов</option>
+    <option>А</option>
+    <option>Б</option>
+  </select>
+  <span>Выбрано: {{ selected }}</span>
+</div>
+
+  data() {
+    return {
+      selected: ''
+    }
+  }
+
+
+-- Динамическое отображение списка опций с помощью v-for:
+<div>
+  <select v-model="selected">
+    <option v-for="option in options" :value="option.value">
+      {{ option.text }}
+    </option>
+  </select>
+  <span>Выбрано: {{ selected }}</span>
+</div>
+
+  data() {
+    return {
+      selected: 'A',
+      options: [
+        { text: 'Один', value: 'A' },
+        { text: 'Два', value: 'B' },
+        { text: 'Три', value: 'C' }
+      ]
+    }
+  }
+  
+  
+  
+== Компоненты
+// Создаём приложение Vue
+const app = Vue.createApp({})
+
+// Определяем новый глобальный компонент с именем button-counter
+app.component('button-counter', {
+  data() {
+    return {
+      count: 0
+    }
+  },
+  template: `
+    <button @click="count++">
+      Счётчик кликов — {{ count }}
+    </button>`
+});
+
+
+<div id="components-demo">
+  <button-counter></button-counter>
+</div>
+
+--
+const app = Vue.createApp({
+  components: {
+    'component-a': ComponentA,
+    'component-b': ComponentB
+  }
+})
+--
+const ComponentA = {
+  /* ... */
+}
+
+const ComponentB = {
+  components: {
+    'component-a': ComponentA
+  }
+  // ...
+}
+

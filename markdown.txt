@@ -1,0 +1,124 @@
+ Paragraphs:
+ #
+ ##
+ ### ... -> 6
+
+ heading 1
+ ==========
+
+ heading 2
+ ----------
+
+ Text Decoration:
+
+ *text*			- italic
+ _text_			
+
+ **text**		- bold
+ __text__		
+
+ ~~text~~		- перечеркнутое
+
+# Links:
+#### way 1		http://wesbos.com
+
+#### 2			<http://wesbos.com>
+
+#### 3			[my github](http://github.com)
+
+#### 4			[hackeryou.com](http://hackeryou.com "This is where wes theaches") : with title
+
+#### 5			reference [wes][1]
+				[hackers][hack]
+				
+				[1]: http://wesbos.com
+				[hack]: http://hackeryou.com
+
+
+# Images:
+## 1
+![image 1!](http://unsplash.it/500/500?random "This is the tooltip")
+
+## 2 reference
+![image 1!][pup]
+
+[pup]: http://unsplash.it/500/500?random
+
+## 3 [![]()]
+[![](http://unsplash.it/50/50?random)](http://unsplash.it/500/500?random)
+
+## 4 <img src="">
+[<img src="http://unsplash.it/50/50?random">](http://unsplash.it/500/500?random)
+
+## 5 style
+
+<img src="http://12unsplash.it/50/50?random" width="300" height="300" alt="describe img">
+
+# Lists:
+## 1
++ milk
++ eggs
+
+## 2
+Unordered
+* Item 1
+* Item 2
+  * Item 2a
+  * Item 2b
+    * item 2b1
+    * item 2b2
+
+Ordered
+1. Item 1
+1. Item 2
+1. Item 3
+   1. Item 3a
+   1. Item 3b
+
+# Blockquotes:
+	As Kanye West said:
+	
+	> We're living the future so
+	> the present is our past.
+
+# Inline code:
+
+I think you should use an
+`<addr>` element here instead.
+
+# Code:
+## \n + indent _[x4]_:
+here is my Code:
+
+    var x = 100;
+    const dog = 'snickers';
+
+## code block:
+```js
+$age = 50;
+$name = "wes";
+echo strtoupper($name);
+```
+
+## inline: ``
+Hey did you try `var x = 100;`?
+
+
+## code Highlighting:
+```diff
+var x = 100;
+- var y = 200;
++ var y = 300;
+```
+
+
+# Tables:
+| Name | dog's Age |
+|:-----:|---:|
+|snickers|2|
+|reks|255|
+
+## выравнивание:
+ :--  :--:  --:
+
+

@@ -1,0 +1,64 @@
+
+#dns
+
+ nslookup -q=mx name.com
+			 ns
+			 axfr
+ host name.com
+ dig name.com  @dnsserver axfr
+
+#whois
+
+nslookup name.com		-> ip
+whois ip
+
+-------------------
+ whois name.com
+
+-------------------
+
+# сканирование портов 
+
+host name.ru   -> 'ip'
+
+nmap -sS -T4 -n  'ip'
+nmap -sS -T4 -n -A  'ip'				- -A - более глубокий анализ и правильнее
+
+nmap -sS -T4 -n -A  -p 1-65535 'ip' 	- -p - порты (1-65535 -> от 1 до 65535)
+
+
+# manual reque
+
+telnet <target> 80
+nc <target> 80
+
+---
+telnet ya.ru 80
+	GET / HTTP/1.1                                                  
+	Host: ya.ru  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

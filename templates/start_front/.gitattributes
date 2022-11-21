@@ -1,0 +1,17 @@
+* text=auto
+
+# force text
+*.html text
+*.js text
+*.css text
+
+# unix files (need LF)
+*.sh eol=lf
+
+# binary files
+*.jpg binary
+*.gif -text
+
+# чтобы diff понимал разметку html
+*.html diff=html
+*.css diff=css

@@ -1,0 +1,141 @@
+
+# env
+
+python3 -m venv env
+source myvenv/bin/activate 
+
+pip install 
+	selenium
+
+-- beautifulSoup --
+---- command line:
+pip install bs4
+pip install lxml
+------------------
+import requests 
+from bs4 import BeautifulSoup as bs
+
+url2 = 'http://bit.ly/1KGe2Qk'
+html = urlopen(url2)
+bsObj = BeautifulSoup(html)
+
+.read()
+.get()
+.get_text()
+.findAll() || .find_all()
+.find()						// .find("tag", class_="name")
+							// .find("tag", text="name")
+							// .find("tag", {"data-set"="name"})
+.children		
+.descendants	- потомки
+
+.next_sibling
+.find_next_sibling()
+
+.netx_siblings
+
+
+.previous_sibling
+.find_previous_sibling()
+
+.previous_siblings
+
+.parent
+.find_parent(class_="class_name")
+
+.parents
+.find_parents(class_="class_name")
+
+.attrs['src']
+
+nameList = bsObj.findAll("span", {"class":"green"}).children
+for name in nameList:
+    print(name.get_text()
+------------------------------
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- задание headers, User-Agent --
+import requests 
+from bs4 import BeautifulSoup as bs
+
+session = requests.Session()
+headers = {
+    "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_5) AppleWebKit 537.36 (KHTML, like Gecko) Chrome",
+    "Accept":"text/html, app;ication/xhtml+xml, application/xml; q=0.9,image/webp,*/*;q=0.8"}
+
+url = "https://www.whatismybrowser.com/developers/what-http-headers-is-my-browser-sending"
+req = session.get(url, headers=headers)
+bsObj = BeautifulSoup(req.text)
+print(bsObj.find("table", {"class":"table-striped"}).get_text)
+
+
+ -- scrapy
+ pip install scrapy
+scrapy startproject pro
+ 
+
+
+
+
+==== Получение информации о web страницах ====
+import urllib.request
+import urllib.parse
+
+url_file = urllib.request.urlopen('http://djbook.ru') 
+# .urlopen    - открывать и считывать какую-либо информацию.
+
+html_file = url_file.read()
+html_file = html_file.decode('utf-8')
+or
+html_file = html_file.decode('cp1251')
+
+url_file.info()
+x = url_file.getcode()
+
+# парсинг вариант 1
+from urllib.parse import urlparse
+from urllib.parse import urlunparse
+
+url_res = urlparse('https://djbook.ru/rel1.9/contents.html')
+
+url_res.netloc     # djbook.ru
+
+url_res_tuple = tuple(url_res)       # ('https', 'djbook.ru', '/rel1.9/contents.html', '', '', '')
+url_res2 = urlunparse(url_res_tuple) # https://djbook.ru/rel1.9/contents.html
+
+# парсинг вариант 2
+from urllib.parse import urlsplit
+from urllib.parse import urlunsplit
+
+url_res = urlsplit('https://djbook.ru/rel1.9/intro/tutorial07.html')
+url_res_tuple = tuple(url_res)
+url_res2 = urlunsplit(url_res)
+
+url_res = urlsplit('https://djbook.ru/rel1.9/intro/tutorial07.html')
+url_res_list = list(url_res)
+
+url_res_list[2] = '/rel1.9/intro/tutorial06.html'
+
+url_new_tuple=tuple(url_res_list)
+url_new = urlunsplit(url_new_tuple)
+
+from urllib.parse import urljoin
+
+urljoin('https://djbook.ru/rel1.9/intro/tutorial07.html', 'intro2/tutorial06.html')
+urljoin('https://djbook.ru/rel1.9/intro/tutorial07.html', '../../tutorial06.html')
+
+
+

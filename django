@@ -1,0 +1,173 @@
+==== Установка ====
+
+ ---- django girls: https://tutorial.djangogirls.org/ru/installation/?q=
+ 1. виртуальное окружение 
+
+ sudo apt-get install python3-venv
+ python3 -m venv env
+
+ source myvenv/bin/activate
+ 
+ pip install -r packages.txt	// установка из файла
+
+
+ 2. Установка Django
+
+ pip install --upgrade pip
+ pip install django~=1.11.0
+
+ -- проверка версии
+ >>> import django 
+ >>> print(django.get_version())
+
+
+===================
+python manage.py inspectdb
+python manage.py check --deploy
+======
+ django-admin startproject mysite .
+
+ ---- /settings.py ...
+ 
+ TIME_ZONE = 'Europe/Moscow'
+ LANGUAGE_CODE = 'ru-ru'
+
+ ALLOWED_HOSTS = ['127.0.0.1', 'localhost' 'djalex.pythonanywhere.com']
+
+ +
+ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+ ---- 
+ python manage.py migrate	- создание БД
+
+ python manage.py runserver
+ python manage.py runserver 0:8000
+
+
+ python manage.py startapp blog
+
+ °°°° последовательность осн. команд при разработке °°°°
+ 1. изменения в models.py
+ 2. python manage.py makemigrations 
+ 3. python manage.py migrate 
+
+ °°°°
+
+ ---- mysite/settings.py 
+
+ INSTALLED_APPS = [
+    ...
+    'blog',
+ ]
+ ----
+ blog/models.py
+ ----
+ python manage.py makemigrations blog		-  добавление нашей модели в базу данных
+ python manage.py migrate blog
+
+ -- -- если ошибка, то в urls.py дописываем
+ from django.conf.urls import url
+
+ -- admin.py
+ from .models import Article
+ admin.site.register(Article)
+
+ ==== Администрирование
+
+ python manage.py createsuperuser
+	girl admingirl
+
+ ===============================
+ == mysql ==
+ ...$ sudo apt-get install libmysqlclient-dev
+ (env)...$ pip install mysqlclient
+
+
+ ===========
+
+ ---- WEB
+ Virtualenv:	/home/<your-username>/my-first-blog/myvenv/
+ WSGI configuration file: 
+import os
+import sys
+
+path = os.path.expanduser('~/my-first-blog')
+if path not in sys.path:
+    sys.path.append(path)
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'mysite.settings'
+
+from django.core.wsgi import get_wsgi_application
+from django.contrib.staticfiles.handlers import StaticFilesHandler
+application = StaticFilesHandler(get_wsgi_application())
+
+----
+
+ 
+ ==========
+ ==== ссылки ====
+ ---- html
+ href="{% url 'post_new' %}"
+
+ ---- urls.py
+ urlpatterns = [ ... , url(r'^post/new/$', views.post_new, name='post_new'), ... ]
+
+ ---- views.py
+ from ____ import PostForm
+ 
+ def post_new(request):
+    form = PostForm()
+    return render(request, 'blog/post_edit.html', {'form':form})
+
+ -- django.shortcuts
+
+ render(request, 		// обязательно
+		template_name,	// обязательно
+		context=None, 
+		context_instance=_context_instance_undefined, 
+		content_type=None, 
+		status=None, 
+		current_app=_current_app_undefined, 
+		dirs=_dirs_undefined, 
+		using=None)
+
+ render_to_string(	template_name, 
+					context=None, 
+					context_instance=_context_instance_undefined,
+					request=None, 
+					using=None)
+ ---- 
+ ================
+
+==== обработка статики (DEBUG=False)
+1. pip install WhiteNoise
+
+2. settings.py
+
+1). 
+MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware', #add whitenoise
+     ...
+]
+
+2).
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+3. python manage.py collectstatic
+
+4. html
+
+href="{% static 'style/icons.css' %}
+
+###!!! wsgi.py не трогаем
+
+==============
+
+=== decorators
+@login_required
+
+=== ERRORS
+Отношение уже существует
+/manage.py migrate --fake app_current

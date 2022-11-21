@@ -1,0 +1,58 @@
+ == settings
+sudo usermid -aG docker $USER
+sudo service docker restart
+===
+
+== docker:
+	run -it ubuntu bash
+	run -h <hostname> -it ubuntu bash
+	run  --name <container_name> -h <hostname> -it ubuntu bash
+	run  -it --name <container_name> --hostname <hostname>  ubuntu bash
+	run container_name>/<app_name> cowsay "arguments"
+	run -d <img>																			-- <img> -> container_name>/<app_name>
+	run -d -p <local_port>:<container_port> <img>  		-- проброс портов	 --> run -d -p 8000:8080 <img>
+
+	ps
+	ps -a
+	ps -aq -f status=exited
+	rm -v $(docker ps -aq -f status=exited)						-- удаление контейнеров
+	rmi <image>																				-- удаление образов
+	rmi $(docker images -q) --force
+
+	start	<container_name>
+	stop <container_name>
+	inspect <container_name>
+	diff <container_name>
+	logs <container_name>
+	images
+	
+	login
+	commit <container_name> <docker_id>/<name>
+	push toevilhell/myapp:tagname
+
+
+
+	
+== Dockerfile
+FROM ubuntu
+
+RUN apt-get update && apt-get install -y cowsay && ln -s /usr/games/cowsay /usr/bin/cowsay
+
+ENTRYPOINT ["cowsay"]
+--
+-- after create Dockerfile
+	docker build -t toevilhell/myapp .
+	docker run  toevilhell/myapp "TEST"
+
+
+== docker-compose.yml
+	docker-compose up --build		-- build исп-ся в 1й раз, далее просто up
+	docker-compose up
+	docker-compose up -d				-- запуск в фоновом режимме
+			ps
+			build
+			rm <container_name>
+			exec <container_name> bash
+== .env
+	
+	
